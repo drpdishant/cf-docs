@@ -1,0 +1,9 @@
+---
+applications:
+- name: docs
+  memory: 100M
+  buildpack: paketo-buildpacks/nginx
+  path: .
+  env:
+    CF_STAGING_TIMEOUT: 15
+    CF_STARTUP_TIMEOUT: 15
