@@ -14,8 +14,14 @@
   <script>
     window.$docsify = {
       name: 'Opexcell Cloud',
-      repo: '',
+      repo: 'https://gitlab.orderhive.plus/devops/cloud-docsify.git',
       loadNavbar: true,
+      coverpage: true
+    }
+  </script>
+  <script>
+    if (typeof navigator.serviceWorker !== 'undefined') {
+      navigator.serviceWorker.register('sw.js')
     }
   </script>
   <!-- Docsify v4 -->
