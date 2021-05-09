@@ -16,8 +16,15 @@
     window.$docsify = {
       name: 'Opexcell Cloud',
       repo: 'https://gitlab.orderhive.plus/devops/cloud-docsify.git',
-      loadNavbar: true,
       coverpage: true,
+      loadSidebar: true,
+      subMaxLevel: 4,
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'
+      },
+      tabs: {
+       sync: true // default
+      },
       copyCode: {
         buttonText : 'Copy to Clipboard',
         errorText  : 'Error',
@@ -35,6 +42,11 @@
     if (typeof navigator.serviceWorker !== 'undefined') {
       navigator.serviceWorker.register('sw.js')
     }
-  </script> 
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-powershell.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-php.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-ini.min.js"></script>
 </body>
 </html>
