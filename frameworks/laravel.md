@@ -6,6 +6,7 @@ Following are the configuration files that will be required:
 
 - manifest.yml - Cloudfoundry manifest
 - buildpack.yml - PHP Buildpack Specific Configuration. Here we'll be using [paketo buildpack for php](https://paketo.io/docs/buildpacks/language-family-buildpacks/php/).
+- .profile - Symlinks to provide workaround for paketo buildpack related issue with composer layer caching. ()
 - extensions.ini - PHP Extensions to be enabled
 
 ## Writing the `manifest.yml`
@@ -186,6 +187,15 @@ php:
   webserver: httpd # Web server to use, e.g php-server, httpd, nginx
   webdirectory: public
   version: 7.3.*
+```
+
+## Creating `.profile`
+
+This file is a simple bash profile script which will be loaded during the app startup. In our case we are using it as workaround for the php build pack bug related to caching the composer layer
+
+```bash
+#!/bin/bash
+ln -s /workspace/app /layers/paketo-buildpacks_php-composer/php-composer-packages/app
 ```
 
 ## Creating `extensions.ini`
