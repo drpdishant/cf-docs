@@ -14,29 +14,6 @@ Following are the configuration files that will be required:
 Manifest is a yaml file consisting of necessary configurations such as application name and buildpack to be used. 
 
 Create a file named `manifest.yml` at project root
-
-<!-- tabs:start -->
-
-### **Windows**
-
-```pwsh
-New-Item manifest.yml
-```
-
-### **Linux**
-
-```bash
-touch manifest.yml
-```
-
-### **Mac**
-
-```bash
-touch manifest.yml
-```
-
-<!-- tabs:end -->
-
 ### Application Name and Buildpack
 
 Define the application name and buildpack configurations
@@ -139,34 +116,11 @@ applications:
       php artisan optimize
 ```
 
-## Writing the `buikdpack.yml`
+## Writing the `buildpack.yml`
 
 This file contains all the buildpack specific configuration, e.g for php version, composer version, web directory etc.
 
-- Create Buildpack file
-
-<!-- tabs:start -->
-
-### **Windows**
-
-```pwsh
-New-Item buildpack.yml
-```
-
-### **Linux**
-
-```bash
-touch buildpack.yml
-```
-
-### **Mac**
-
-```bash
-touch buildpack.yml
-```
-
-<!-- tabs:end -->
-
+- Create a file named `buildpack.yml` at project root
 ### composer configuration
 
 - The composer directive will have configuration for composer such as version, vendor_directory, global packages, etc.
@@ -193,6 +147,8 @@ php:
 
 This file is a simple bash profile script which will be loaded during the app startup. In our case we are using it as workaround for the php build pack bug related to caching the composer layer
 
+Create a file named `.profile` with below content
+
 ```bash
 #!/bin/bash
 ln -s /workspace/app /layers/paketo-buildpacks_php-composer/php-composer-packages/app
@@ -202,51 +158,7 @@ ln -s /workspace/app /layers/paketo-buildpacks_php-composer/php-composer-package
 
 This file contains the list of php extensions to be enabled in the buildpack runtime. It is located at inside .php.ini.d/extensions.ini
 
-<!-- tabs:start -->
-
-### **Windows**
-
-- Create .php.ini.d
-
-```pwsh
-mkdir .php.ini.d
-```
-
-- Creating extensions.ini
-
-```pwsh
-New-Item .\.phpi.ini.d\extensions.ini
-```
-
-### **Linux**
-
-- Create .php.ini.d
-
-```bash
-mkdir .php.ini.d
-```
-
-- Creating extensions.ini
-
-```bash
-touch .php.ini.d/extensions.ini
-```
-
-### **Mac**
-
-- Create .php.ini.d
-
-```bash
-mkdir .php.ini.d
-```
-
-- Creating extensions.ini
-
-```bash
-touch .php.ini.d/extensions.ini
-```
-
-<!-- tabs:end -->
+Create a file named `extensions.ini` inside .php.ini.d directory at project root
 
 - Write list of enabled extensions as shown below
 
@@ -344,4 +256,40 @@ sidecars:
 instances:      0/0
 memory usage:   1024M
 There are no running instances of this process.
+```
+
+### Running Tasks
+
+Once the app is deployed we can run the one-off task defined in manifest.
+
+- Run task
+
+```bash
+cf run-task voyager --name migrate
+```
+
+- Check status
+
+```bash
+cf tasks voyager
+```
+
+Output:
+
+```bash
+Getting tasks for app voyager in org openxcell / space test as admin...
+
+id   name      state       start time                      command
+1    migrate   SUCCEEDED   Mon, 10 May 2021 16:46:30 UTC   php artisan migrate --force
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan optimize
+php artisan storage:link
+```
+
+- Check logs
+
+```bash
+cf logs voyager --recent
 ```
