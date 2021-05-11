@@ -19,13 +19,13 @@ Openxcell Cloud is a distribution of [Cloudfoundry](https://cloudfoundry.org) Ma
 - Debian/Ubuntu 
 
 ```bash
-curl -sSLk https://gitlab.orderhive.plus/devops/cloud-docsify/-/raw/master/scripts/install-deb.sh | sudo bash
+curl -sSLk https://docs.cloud.openxcell.dev/scripts/install-deb.sh | sudo bash
 ```
 
 - RHEL/Fedora
 
 ```bash
-curl -sSLk https://gitlab.orderhive.plus/devops/cloud-docsify/-/raw/master/scripts/install-rhel.sh | sudo bash
+curl -sSLk https://docs.cloud.openxcell.dev/scripts/install-rhel.sh | sudo bash
 ```
 ### **Mac**
 
