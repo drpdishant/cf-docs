@@ -12,8 +12,6 @@ Openxcell Cloud is a distribution of [Cloudfoundry](https://cloudfoundry.org) Ma
 
 ### **Windows**
 
-Install CLI
-
 [Download Installer](https://packages.cloudfoundry.org/stable?release=windows64&version=v7&source=github)
 
 ### **Linux**
