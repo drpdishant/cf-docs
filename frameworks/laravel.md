@@ -120,16 +120,7 @@ applications:
 
 This file contains all the buildpack specific configuration, e.g for php version, composer version, web directory etc.
 
-- Create a file named `buildpack.yml` at project root
-### composer configuration
-
-- The composer directive will have configuration for composer such as version, vendor_directory, global packages, etc.
-
-```yaml
-composer:
-  vendor_directory: vendor
-```
-
+- Create a file named `buildpack.yml` at project root, insert the following content into it.
 ### php runtime configuration
 
 - The php directive will have configuration for webserver to use, webdirectory, version to install
@@ -140,7 +131,7 @@ php:
   # default: htdocs
   webserver: httpd # Web server to use, e.g php-server, httpd, nginx
   webdirectory: public
-  version: 7.3.*
+  version: 7.4.* #PHP Version to use, Default is 8.0 or as defined in composer.json
 ```
 
 ## Creating `.profile`
@@ -152,6 +143,7 @@ Create a file named `.profile` with below content
 ```bash
 #!/bin/bash
 ln -s /workspace/app /layers/paketo-buildpacks_php-composer/php-composer-packages/app
+ln -s /layers/paketo-buildpacks_php-composer/php-composer-packages/vendor /workspace/vendor
 ```
 
 ## Creating `extensions.ini`
@@ -347,7 +339,7 @@ Once restage is complete you can check the env and look for VCAP_SERVICE
 cf env voyager
 ```
 
-```
+```json
 VCAP_SERVICES: {
  "shared-mysql": [
   {
@@ -376,4 +368,52 @@ VCAP_SERVICES: {
   }
  ]
 }
+```
+
+> VCAP SQUASH
+
+> To be able to use the service credentials directly as environment variables you can use [vcap-squash](https://github.com/cloudfoundry-community/vcap-squash), a tool that squashes VCAP_SERVICE credentials as flat environment variables. You can check out the usage on its [github page](https://github.com/cloudfoundry-community/vcap-squash).
+
+- Download and place its binary in project root.
+
+```bash
+curl -Lo vcap-squash https://github.com/cloudfoundry-community/vcap-squash/releases/download/v0.1.1/vcap-squash-linux-amd64
+```
+
+- Update `.profile` as shown
+
+```bash
+#!/bin/bash
+ln -s /workspace/app /layers/paketo-buildpacks_php-composer/php-composer-packages/app
+ln -s /layers/paketo-buildpacks_php-composer/php-composer-packages/vendor /workspace/vendor
+eval $(./vcap-squash)
+```
+
+- Now the environment variables will be available as shown
+
+| JSON KEY | ENV |
+| -- | -- |
+| shared-mysql.credentials.hostname | SHARED_MYSQL_HOSTNAME |
+| shared-mysql.credentials.username | SHARED_MYSQL_USERNAME |
+| shared-mysql.credentials.name | SHARED_MYSQL_NAME |
+| shared-mysql.credentials.password | SHARED_MYSQL_PASSWORD |
+| shared-mysql.credentials.port | SHARED_MYSQL_PORT |
+
+- Editing the manifest to use the above variables.
+
+```yaml
+applications:
+- name: voyager
+  memory: 100M
+  buildpack: paketo-buildpacks/php
+  env:
+    ...
+    ...
+    DB_CONNECTION: mysql
+    DB_HOST: ${SHARED_MYSQL_HOSTNAME}
+    DB_PORT: ${SHARED_MYSQL_PORT}
+    DB_DATABASE: ${SHARED_MYSQL_NAME}
+    DB_USERNAME: ${SHARED_MYSQL_USERNAME}
+    DB_PASSWORD: ${SHARED_MYSQL_PASSWORD}
+  ...
 ```
