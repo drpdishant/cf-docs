@@ -265,7 +265,7 @@ Once the app is deployed we can run the one-off task defined in manifest.
 - Run task
 
 ```bash
-cf run-task voyager --name migrate
+cf run-task voyager
 ```
 
 - Check status
@@ -292,4 +292,88 @@ php artisan storage:link
 
 ```bash
 cf logs voyager --recent
+```
+
+## Creating and Binding Shared MySQL Service
+
+Shared MySQL Service is built and deployed with the [shared-mysql-service-broker](https://github.com/making/shared-mysql-service-broker).
+Its configured with an existing database and provides and open service broker interface for provisioning database as service and binding credentials with application
+
+You can list the service in marketplace but running,
+
+```bash
+cf marketplace
+```
+
+Output:
+
+```bash
+Getting all service offerings from marketplace in org openxcell / space test as testing...
+
+offering       plans    description    broker
+shared-mysql   shared   Shared MySQL   shared-mysql
+```
+
+### Creating Database (Creating Service Instance)
+
+Creating the service instance for the shared-mysql service will create a database onto the shared db server and make it available for binding with application
+
+```
+cf create-service shared-mysql shared voyager-db
+```
+
+### Binding the Service
+
+Binding the service instance to an application will insert the service info and credentials into the environment of the application, which will then be dynamically read by the application to connected to the service.
+Binding a service instance to an application inserts the details into an environment variable named VCAP_SERVICE
+
+- Bind
+
+```bash
+cf bind-service voyager-db voyager
+```
+
+Binding a service instance requires applicated to be restaged in order to update the environment variables
+
+- Restage
+
+```bash
+cf restage voyager
+```
+
+Once restage is complete you can check the env and look for VCAP_SERVICE
+
+```bash
+cf env voyager
+```
+
+```
+VCAP_SERVICES: {
+ "shared-mysql": [
+  {
+   "binding_guid": "7f96d75b-b707-4af6-b1bb-ff28ef2b37cb",
+   "binding_name": null,
+   "credentials": {
+    "hostname": "my-cluster-mysql-master.default.svc",
+    "jdbcUrl": "jdbc:mysql://my-cluster-mysql-master.default.svc:3306/cf_4122847937834fd7b9f3c39724a4b707?useSSL=false\u0026allowPublicKeyRetrieval=true\u0026user=9af51e13c99b849d\u0026password=da51dd65adeb4a108be432e47af7b1aa",
+    "name": "cf_4122847937834fd7b9f3c39724a4b707",
+    "password": "da51dd65adeb4a108be432e47af7b1aa",
+    "port": 3306,
+    "uri": "mysql://9af51e13c99b849d:da51dd65adeb4a108be432e47af7b1aa@my-cluster-mysql-master.default.svc:3306/cf_4122847937834fd7b9f3c39724a4b707?useSSL=false\u0026allowPublicKeyRetrieval=true\u0026reconnect=true",
+    "username": "9af51e13c99b849d"
+   },
+   "instance_guid": "e4a8bc58-d19f-4644-8d3c-b6561a8e7027",
+   "instance_name": "voyager",
+   "label": "shared-mysql",
+   "name": "voyager",
+   "plan": "shared",
+   "provider": null,
+   "syslog_drain_url": null,
+   "tags": [
+    "mysql"
+   ],
+   "volume_mounts": []
+  }
+ ]
+}
 ```
