@@ -1,5 +1,5 @@
 def cf_api = "api.cloud.openxcell.dev"
-def cf_org = "openxcell.org"
+def cf_org = "openxcell"
 def cf_space = "devops"
 
 pipeline {
