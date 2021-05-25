@@ -1,4 +1,4 @@
-def cf_api = "api.cloud.openxcell.dev"
+def cf_api = "https://api.cloud.openxcell.dev/v3"
 def cf_org = "openxcell"
 def cf_space = "devops"
 
