@@ -8,12 +8,14 @@ pipeline {
     } 
     stages {
         stage('Push to Cloudfoundry') {
+            steps {
             pushToCloudFoundry(
                 target: cf_api,
                 organization: cf_org,
                 cloudSpace: cf_space,
                 credentialsId: 'cloudfoundry_devops'
                 )
+            }
         }
     }
 }
