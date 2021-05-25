@@ -3,7 +3,6 @@ def cf_org = "openxcell.org"
 def cf_space = "devops"
 
 pipeline {
-    pipeline {
     agent {
         label 'ec2-fleet'
     } 
@@ -17,5 +16,4 @@ pipeline {
                 )
         }
     }
-}
 }
