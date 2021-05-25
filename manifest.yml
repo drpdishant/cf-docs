@@ -8,8 +8,3 @@ applications:
     CF_STAGING_TIMEOUT: 15
     CF_STARTUP_TIMEOUT: 15
     WEB_ROOT: ./
-  processes:
-  - type: task
-    name: list
-    memory: 50M
-    command: ls -la

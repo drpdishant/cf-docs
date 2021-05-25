@@ -1,4 +1,4 @@
-# Welcome to Documentaion for Openxcell Cloud
+# Welcome to Documentation for Openxcell Cloud
 
 ## Overview 
 
