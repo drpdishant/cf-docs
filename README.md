@@ -1,5 +1,12 @@
 # Welcome to Documentation for Openxcell Cloud
 
+## Endpoints
+
+**Cloud API:**  [api.cloud.openxcell.dev](https://api.cloud.openxcell.dev)
+
+**Cloud Apps:** [apps.openxcell.dev](https://*.apps.openxcell.dev)
+
+**Cloud Console:** [console.openxcell.dev](https://console.openxcell.dev)
 ## Overview 
 
 Openxcell Cloud is a distribution of [Cloudfoundry](https://cloudfoundry.org) Managed by DevOps Team to provide self service app deployment platform for development teams.

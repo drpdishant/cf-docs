@@ -4,17 +4,18 @@ def cf_space = "devops"
 
 pipeline {
     agent {
-        label 'ec2-fleet'
+         docker {
+            image "ppiper/cf-cli"
+            label 'ec2-fleet'
+        }
     } 
     stages {
         stage('Push to Cloudfoundry') {
             steps {
-            pushToCloudFoundry(
-                target: cf_api,
-                organization: cf_org,
-                cloudSpace: cf_space,
-                credentialsId: 'cloudfoundry_devops'
-                )
+                withCredentials([usernamePassword(credentialsId: 'cloudfoundry_devops', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                sh "cf login -a ${cf_api} -u ${USERNAME} -p ${PASSWORD}"
+                sh "cf push"
+                }
             }
         }
     }
