@@ -22,10 +22,13 @@ applications:
   env:
     PROFILE: development
     JAVA_OPTS: "-Dspring.profiles.active=${PROFILE} -Dserver.port=${PORT}"
-    # JAVA_TOOL_OPTIONS: "-Dspring.profiles.active=development"
+    BP_JVM_VERSION: 11 #To explicitly set Java Version
+    
 ```
 
 Deployment uses paketo buildpacks which will detect the builder, build the application and deploy.
+
+For more buildpack specific cofiguration refer documentation for [paketo java buildpack](https://paketo.io/docs/buildpacks/language-family-buildpacks/java/#)
 
 ## .cfignore
 
@@ -68,9 +71,9 @@ cf push
 
 ## Actuator Healthcheck
 
-Cloudfoundry follow 12-Factor Application Principles and its preferred to configure healthchecks into your application.
+Cloudfoundry follows 12-Factor Application Principles and it is preferred to configure health checks into your application.
 
-Spring Boot Actuator is a library that provides easy to configure healthcheck endpoints. 
+Spring Boot Actuator is a library that provides easy to configure health check endpoints. 
 
 Configuring the Dependency:
 
@@ -96,7 +99,7 @@ implementation 'org.springframework.boot:spring-boot-starter-actuator'
 ```
 <!-- tabs:end -->
 
-Acuator by default enables healthcheck endpoint without any configuration at `/actuator/health`, which would return status of the application
+Actuator by default enables health check endpoint without any configuration at `/actuator/health`, which would return status of the application
 
 ```bash
 curl localhost:8080/actuator/health
