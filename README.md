@@ -9,9 +9,19 @@
 **Cloud Console:** [console.openxcell.dev](https://console.openxcell.dev)
 ## Overview 
 
-Openxcell Cloud is a distribution of [Cloudfoundry](https://cloudfoundry.org) Managed by DevOps Team to provide self service app deployment platform for development teams.
+> Making deployments fun and easy for the developers
 
-> cf push .. and your app is live
+
+Openxcell Cloud is built on top of Kubernetes with [cf-for-k8s](https://cf-for-k8s.io/) a distribution of [Cloudfoundry](https://cloudfoundry.org) managed by the operations team at Openxcell to provide a unified and self service platform for developers to deploy and manage their applications.
+
+Integrated with technologies like [open service broker api](https://www.openservicebrokerapi.org/) and [paketo](https://paketo.io/) we bring you the best in class platform where you can manage applications and their backing services, easily and in a fun way. Install the CLI or use the [Stratos Console](https://console.openxcell.dev) to get started.
+
+[Paketo Buildpacks](https://paketo.io/) are based on [cloud native buildpack](https://buildpacks.io/) standards to magically convert your source code into production ready container images, that just run.
+- No Dockerfiles
+- No 100's of lines of pipelines
+
+### Embracing Devops
+At Openxcell we strive to embrace a Devops culture and mindset, and this is one such attempt to bring a cultural shift to the organization, by creating consistent and streamlined processes across teams, shifting responsibility and accountability of the application development to their respective teams.
 
 ## Quick Setup
 
@@ -58,4 +68,17 @@ cf api api.cloud.openxcell.dev
 cf auth USERNAME PASSWORD
 ```
 
-> Replace testing with your username and login with password provided by the platform administrators
+### Set Target Org and Space
+
+
+```bash
+cf target -o openxcell -s development
+```
+
+!> development space is a common sandbox area to test with the platform. Replace it with the space name provided by the Administrators, ususally it will be the name of the project.
+
+> Please contact Administrators for more details.
+
+###  Start Deploying
+
+Follow the docs for specific platforms to configure and deploy.

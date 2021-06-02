@@ -4,8 +4,8 @@ This guide walks you through deploying your Jave application to Openxcell Cloud.
 
 Following are the configuration files you need to create.
 
-- manifest.yml : Cloudfoundry manifest
-- .cfignore : list of paths and files to ignore during cf push
+- **manifest.yml** : Cloudfoundry manifest
+- **.cfignore** : list of paths and files to ignore during cf push
 
 
 ## manifest.yml
@@ -103,4 +103,4 @@ curl localhost:8080/actuator/health
 {"status":"UP"}
 ```
 
-For mode configuration details check out this [Tutorial](https://www.baeldung.com/spring-boot-actuators)
+For more configuration details check out this [Tutorial](https://www.baeldung.com/spring-boot-actuators)
