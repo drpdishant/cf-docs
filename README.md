@@ -36,13 +36,13 @@ At Openxcell we strive to embrace a Devops culture and mindset, and this is one 
 - Debian/Ubuntu 
 
 ```bash
-curl -sSLk https://docs.cloud.openxcell.dev/scripts/install-deb.sh | sudo bash
+curl -sSLk https://docs.apps.openxcell.dev/scripts/install-deb.sh | sudo bash
 ```
 
 - RHEL/Fedora
 
 ```bash
-curl -sSLk https://docs.cloud.openxcell.dev/scripts/install-rhel.sh | sudo bash
+curl -sSLk https://docs.apps.openxcell.dev/scripts/install-rhel.sh | sudo bash
 ```
 ### **Mac**
 

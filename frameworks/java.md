@@ -1,12 +1,11 @@
 # Deploying Java Application 
 
-This guide walks you through deploying your Jave application to Openxcell Cloud.
+This guide walks you through deploying your Java application to Openxcell Cloud.
 
 Following are the configuration files you need to create.
 
 - **manifest.yml** : Cloudfoundry manifest
 - **.cfignore** : list of paths and files to ignore during cf push
-
 
 ## manifest.yml
 
