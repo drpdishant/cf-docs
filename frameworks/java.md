@@ -106,3 +106,5 @@ curl localhost:8080/actuator/health
 ```
 
 For more configuration details check out this [Tutorial](https://www.baeldung.com/spring-boot-actuators)
+
+You may also check this [demo application](https://demo-java.apps.openxcell.dev/actuator/) . Its source code is available [here](https://github.com/callicoder/spring-boot-actuator-demo)
