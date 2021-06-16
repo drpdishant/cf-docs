@@ -65,7 +65,27 @@ cf api api.cloud.openxcell.dev
 ### Login to Cloudfoundry CLI
 
 ```bash
-cf auth USERNAME PASSWORD
+cf login --sso
+```
+
+**Output:**
+```
+API endpoint: https://api.cloud.openxcell.dev
+
+Temporary Authentication Code ( Get one at https://uaa.cloud.openxcell.dev/passc
+ode ): 
+
+```
+- Open the temporary passcode url in your browser.
+
+- If you are already logged in on browser it will show the token right away copy and paste it on CLI
+
+- Otherwise on the Cloudfoundry Login Page below `Login From:` Click on [Openxcell SSO](https://uaa.cloud.openxcell.dev/saml/discovery?returnIDParam=idp&entityID=cloudfoundry-saml-login&idp=SAML&isPassive=true) login to keycloak it will redirect to the passcode page.
+
+- If you are already logged in to browser you can go directly to <https://uaa.cloud.openxcell.dev/passcode> and get the temporary passcode, which you can use to login to cli using the following command
+
+```
+cf login --sso-passcode PASSCODE
 ```
 
 ### Set Target Org and Space
