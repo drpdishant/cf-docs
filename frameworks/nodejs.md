@@ -93,7 +93,7 @@ cf push
 
 **Output:**
 
-```
+```bash
 name:                mynodejs-app
 requested state:     started
 isolation segment:   placeholder
