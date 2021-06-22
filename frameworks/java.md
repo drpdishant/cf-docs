@@ -20,9 +20,8 @@ applications:
    - paketo-buildpacks/java
   env:
     PROFILE: development
-    JAVA_OPTS: "-Dspring.profiles.active=${PROFILE} -Dserver.port=${PORT}"
+    JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom -XX:+UseSerialGC -Dspring.profiles.active=${PROFILE} -Dserver.port=${PORT}" # Add "-XX:+UseSerialGC" in JAVA_OPTS to enable GC
     BP_JVM_VERSION: 11 #To explicitly set Java Version
-    
 ```
 
 Deployment uses paketo buildpacks which will detect the builder, build the application and deploy.
