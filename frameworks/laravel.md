@@ -14,7 +14,6 @@ Following are the configuration files that will be required:
 Manifest is a yaml file consisting of necessary configurations such as application name and buildpack to be used. 
 
 Create a file named `manifest.yml` at project root
-### Application Name and Buildpack
 
 Define the application name and buildpack configurations
 
@@ -22,98 +21,9 @@ Define the application name and buildpack configurations
 applications: 
 - name: voyager # Unique Application name, will auto-generate the app url e.g voyager.apps.cloud.openxcell.dev
   buildpack: paketo-buildpacks/php #Buildpack to be used for building the application container.
-```
-
-### Environment Variables
-
-Define environment variables specific to cloudfoundry and laravel application
-
-```yaml
   env:
-    APP_KEY: APP_KEY # Application Key Generated using  php aritisan key:generate --show
-    APP_URL: APP_URL # Laravel app url e.g voyager.apps.cloud.openxcell.dev , Should be set according the to app name
-    APP_ENV: APP_ENV # Laravel app env, e.g local,development or production
-    APP_DEBUG: true # Whether to enable debug or not, Default is false
     CF_STAGING_TIMEOUT: 15 # Max time for staging the app, i.e build,and deploy stages combined. Set to 15 minutes as composer install may take a while.
     CF_STARTUP_TIMEOUT: 15 # Max Time to wait for App Startup once its deployed
-    DB_CONNECTION: mysql # Laravel Database connection type
-    DB_HOST: my-cluster-mysql-master.default.svc ## Laravel Database URL
-    DB_PORT: 3306 # Laravel Database Port
-    DB_DATABASE: voyager # Laravel Database name
-    DB_USERNAME: voyager # Laravel Database user
-    DB_PASSWORD: voyager # Laravel database password
-```
-
-### Tasks
-
-Tasks are used to perform one-off jobs, which include:
-
-- Migrating a database
-- Sending an email
-- Running a batch job
-- Running a data processing script
-- Processing images
-- Optimizing a search index
-- Uploading data
-- Backing-up data
-- Downloading content
-
-```yaml
-processes:
-  - type: task
-    name: migrate
-    command: | 
-      php artisan migrate --force
-      php artisan cache:clear
-      php artisan config:clear
-      php artisan route:clear
-      php artisan optimize
-```
-
-Task can be run using the cf cli once the application is deployed.
-
-```bash
-cf run-task APP --name TASK_NAME
-```
-
-Example:
-
-```bash
-cf run-task voyager --name migrate
-```
-
-### Final Manifest
-
-The final `manifest.yml` would look something like this
-
-```yaml
----
-applications:
-- name: voyager
-  memory: 100M
-  buildpack: paketo-buildpacks/php
-  env:
-    APP_KEY: base64:Rn7AhcbQMRBr05e4Rpdoy7siwNbG5x0s6tjAqTokHgY=
-    APP_URL: https://voyager.apps.cloud.openxcell.dev
-    APP_ENV: local
-    APP_DEBUG: true
-    CF_STAGING_TIMEOUT: 15
-    CF_STARTUP_TIMEOUT: 15
-    DB_CONNECTION: mysql
-    DB_HOST: my-cluster-mysql-master.default.svc
-    DB_PORT: 3306
-    DB_DATABASE: voyager
-    DB_USERNAME: voyager
-    DB_PASSWORD: voyager
-  processes:
-  - type: task
-    name: migrate
-    command: | 
-      php artisan migrate --force
-      php artisan cache:clear
-      php artisan config:clear
-      php artisan route:clear
-      php artisan optimize
 ```
 
 ## Writing the `buildpack.yml`
@@ -132,6 +42,30 @@ php:
   webserver: httpd # Web server to use, e.g php-server, httpd, nginx
   webdirectory: public
   version: 7.4.* #PHP Version to use, Default is 8.0 or as defined in composer.json
+```
+
+When using php runtime you get 3 different options to choose for webserver, of which we will be exploring configuration options for **httpd(apache)** and **nginx** webservers
+
+### webserver: httpd
+
+If you choose **httpd** as your webserver you need to place .htacess file into `public` directory of your laravel project with following content.
+
+```bash
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+```
+### webserver: nginx
+
+If you choose **httpd** as your webserver you need create a directory named .nginx.conf.d into your project root, inside that create a file named extras-server.conf with the following content
+
+```bash
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
 ```
 
 ## Creating `.profile`
@@ -163,7 +97,9 @@ extension=bz2.so
 extension=zlib.so
 ```
 
+## [Setting up environment variables](./operations/setenv.md)
 ## And .... Deploy
+
 
 Ensure that cf cli is installed and configured on your system and you are logged in to the api.
 
