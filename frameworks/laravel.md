@@ -134,6 +134,30 @@ php:
   version: 7.4.* #PHP Version to use, Default is 8.0 or as defined in composer.json
 ```
 
+When using php runtime you get 3 different options to choose for webserver, of which we will be exploring configuration options for **httpd(apache)** and **nginx** webservers
+
+### webserver: httpd
+
+If you choose **httpd** as your webserver you need to place .htacess file into `public` directory of your laravel project with following content.
+
+```bash
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+```
+### webserver: nginx
+
+If you choose **httpd** as your webserver you need create a directory named .nginx.conf.d into your project root, inside that create a file named extras-server.conf with the following content
+
+```bash
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
+```
+
 ## Creating `.profile`
 
 This file is a simple bash profile script which will be loaded during the app startup. In our case we are using it as workaround for the php build pack bug related to caching the composer layer
