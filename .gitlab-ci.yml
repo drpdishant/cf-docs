@@ -31,6 +31,7 @@ build-docker:
   script:
     - echo "Running the tests..."
     - ls
+    - docker ps
     - docker pull node:14
  #   - /kaniko/executor
  #        --context $CI_PROJECT_DIR/
