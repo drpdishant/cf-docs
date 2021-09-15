@@ -2,18 +2,28 @@
 #services:
 #  - docker:19.03.12-dind 
   #This allows us to use docker commands
-default:
-  image: node:14
-  entrypoint: [""]
+#default:
+#  image: node:14
+#  entrypoint: [""]
+#stages:
+#- test
+#test:
+# tags: 
+#    - other-runner
+# stage: test
+# script: 
+#     - node -v
+#     - ls
+#     - ll
+#     - cf --version
 stages:
-- test
-test:
- tags: 
-    - other-runner
+  - RUN_TESTS
 
- stage: test
- script: 
-     - node -v
-     - ls
-     - ll
-     - cf --version
+build-docker:
+  image: gcr.io/kaniko-project/executor:debug-v0.11.0
+  stage: RUN_TESTS
+  tags: 
+    - other-runner
+  script:
+    - echo "Running the tests..."
+    - ls
