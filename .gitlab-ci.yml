@@ -4,7 +4,10 @@ stages:
 test:
  tags: 
     - other-runner
- image: registry.gitlab.orderhive.plus/public-resources/gitlab-ci:cf-cli
+ image: node:14
  stage: test
  script: 
+     - node -v
+     - ls
+     - ll
      - cf --version
