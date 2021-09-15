@@ -6,6 +6,8 @@ test:
  tags: 
     - other-runner
  image: node:14
+ services:
+    - docker:dind # This allows us to use docker commands
  stage: test
  script: 
      - node -v
