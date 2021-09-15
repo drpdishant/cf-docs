@@ -1,13 +1,15 @@
-image: docker
+image: docker:19.03.12
 services:
-    - docker:dind # This allows us to use docker commands
+  - docker:19.03.12-dind 
+  #This allows us to use docker commands
+default:
+  image: node:14
 stages:
 - test
-
 test:
  tags: 
     - other-runner
- image: node:14
+
  stage: test
  script: 
      - node -v
