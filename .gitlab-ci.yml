@@ -6,7 +6,7 @@ test:
     - other-runner
  image: node:14
  stage: test
- script: 
+ step_script: 
      - node -v
      - ls
      - ll
