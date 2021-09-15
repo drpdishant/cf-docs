@@ -16,9 +16,9 @@
 #     - ls
 #     - ll
 #     - cf --version
-build-image:
- image: docker:stable
- services:
+
+image: docker:stable
+services:
     - docker:dind
 stages:
   - RUN_TESTS
