@@ -4,6 +4,7 @@ stages:
 test:
  tags: 
     - other-runner
+ image: registry.gitlab.orderhive.plus/public-resources/gitlab-ci:cf-cli
  stage: test
  script: 
-     - echo "Testing 123"
+     - cf --version
