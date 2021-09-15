@@ -2,6 +2,8 @@ stages:
 - test
 
 test:
+ tags: 
+    - other-runner
  stage: test
  script: 
      - echo "Testing 123"
