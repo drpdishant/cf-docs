@@ -27,3 +27,5 @@ build-docker:
   script:
     - echo "Running the tests..."
     - ls
+    - /kaniko/executor
+         --version
