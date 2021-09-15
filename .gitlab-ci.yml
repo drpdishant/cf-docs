@@ -1,6 +1,6 @@
 #image: docker:19.03.12
 #services:
-  - docker:19.03.12-dind 
+#  - docker:19.03.12-dind 
   #This allows us to use docker commands
 default:
   image: node:14
