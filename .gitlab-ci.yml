@@ -27,7 +27,7 @@ build-docker:
 #  image: gcr.io/kaniko-project/executor:debug-v0.11.0
   stage: RUN_TESTS
   tags: 
-    - other-runner
+    - gitlab-runner
   script:
     - echo "Running the tests..."
     - ls
