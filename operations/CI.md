@@ -26,11 +26,11 @@ Make Sure that if there is any parent repository or main repository available al
 
 ### For API
 
-Use [Gitlab CI API Template](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/blob/master/templates/.gitlab-ci-api.yml) for your reference
+Use [Gitlab CI API Template](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/blob/master/templates) for your reference
 
 We will learn each stage one by one :
 
-1. get_env
+#### get_env
 
 Use this stage/job if you .env file is coming from s3 bucket
 
