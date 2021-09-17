@@ -33,6 +33,12 @@ build-docker:
     - ls
     - docker ps
     - docker pull node:14
+  only:
+    refs:
+      - branches
+    changes:
+      - ./.docker/cf-cli/Dockerfile
+
  #   - /kaniko/executor
  #        --context $CI_PROJECT_DIR/
  #        --dockerfile $CI_PROJECT_DIR/Dockerfile
