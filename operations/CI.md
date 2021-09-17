@@ -2,7 +2,7 @@
 
 Go to **Settings > Expand Visibility, project features, permissions > Enable CI/CD**
 
-![Enable CI](./enable-ci.PNG ':size=50%')
+![Enable CI](./enable-ci.PNG ':size=70%')
 
 
 **Note-** CI/CD Runner only work with **Internal/Public** projects
