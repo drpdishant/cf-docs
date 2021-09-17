@@ -26,7 +26,7 @@ Make Sure that if there is any parent repository or main repository available al
 
 ### For API
 
-Use [Gitlab CI API Template](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/blob/master/templates) for your reference
+Use [Gitlab CI Templates](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/blob/master/templates) for your reference
 
 We will learn each stage one by one :
 
