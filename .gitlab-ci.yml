@@ -1,4 +1,4 @@
-include: $CORE_TEMPLATE
+include: "https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/build.yaml"
 variables:
   PROJECT: "docs"
   SPACE: "devops"
@@ -9,7 +9,3 @@ deploy:
   environment:
       name: development
       url: https://$PROJECT.$DEV_BASE_DOMAIN
-
-
-
-
