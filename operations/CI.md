@@ -40,6 +40,8 @@ For this stage first you have to setup ci/cd variables
 
 Go to **Setting > CI/CD Settings > Expand Variables > Add Variable**
 
+<img src=add-variable.PNG width="50%" height="50%"/>
+
 
 
 
