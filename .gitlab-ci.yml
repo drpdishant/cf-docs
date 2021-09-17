@@ -1,9 +1,10 @@
 include: "https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/build.yaml"
 variables:
   PROJECT: "docs"
-  SPACE: "devops"
 deploy:
   extends: .cf_deploy
+  variables:
+      SPACE: "devops"
   only:
     - master
   environment:
