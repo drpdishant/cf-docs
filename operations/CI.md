@@ -11,7 +11,7 @@ Go to **Settings > Expand Visibility, project features, permissions > Enable CI/
 
 Go to **Setting > Expand Visibility, project features, permissions > Make Project Internal**
 
-<img src="https://gitlab.orderhive.plus/devops/cloud-docsify/-/raw/blob/master/operations/project-visible.png" width="50%" height="50%"/>
+<img src="https://gitlab.orderhive.plus/devops/cloud-docsify/-/blob/e1af2110267eb6fc30b85fc74c0ed820b4e40e91/operations/project-visible.png" width="50%" height="50%"/>
 
 Make Sure that if there is any parent repository or main repository available also make that repository Internal/Public
 
