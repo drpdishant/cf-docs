@@ -20,3 +20,26 @@ Go to **Setting > Expand Visibility, project features, permissions > Make Projec
 Make Sure that if there is any parent repository or main repository available also make that repository Internal/Public
 
 
+**Now you can see CI/CD Tab on side-navigation bar**
+
+## Make .gitlab-ci.yml file in your repository
+
+### For API
+
+Use [Gitlab CI API Template](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/blob/master/templates/.gitlab-ci-api.yml) for your reference
+
+We will learn each stage one by one :
+
+1. get_env
+
+Use this stage/job if you .env file is coming from s3 bucket
+
+For this stage first you have to setup ci/cd variables
+
+#### How to add CI/CD variables in your pipeline
+
+Go to **Setting > CI/CD Settings > Expand Variables > Add Variable**
+
+
+
+
