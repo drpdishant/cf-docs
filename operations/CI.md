@@ -4,7 +4,7 @@ Deploy CI/CD pipeline using Gitlab CI/CD.
 
 ## Enable Gitlab CI/CD
 
-Go to **Settings > Expand Visibility, project features, permissions > Enable CI/CD**\
+Go to **Settings > Expand Visibility, project features, permissions > Enable CI/CD**
 
 <img src=enable-ci.PNG width="50%" height="50%"/>
 
@@ -13,7 +13,7 @@ Go to **Settings > Expand Visibility, project features, permissions > Enable CI/
 
 ### Make Project Internal/Public
 
-Go to **Setting > Expand Visibility, project features, permissions > Make Project Internal**\
+Go to **Setting > Expand Visibility, project features, permissions > Make Project Internal**
 
 <img src=project-visible.PNG width="50%" height="50%"/>
 
