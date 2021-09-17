@@ -1,8 +1,4 @@
-# Configuring CI
-
-Deploy CI/CD pipeline using Gitlab CI/CD.
-
-## Enable Gitlab CI/CD
+## Gitlab CI/CD
 
 Go to **Settings > Expand Visibility, project features, permissions > Enable CI/CD**
 
