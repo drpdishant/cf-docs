@@ -1,45 +1,15 @@
-#image: docker:19.03.12
-#services:
-#  - docker:19.03.12-dind 
-  #This allows us to use docker commands
-#default:
-#  image: node:14
-#  entrypoint: [""]
-#stages:
-#- test
-#test:
-# tags: 
-#    - other-runner
-# stage: test
-# script: 
-#     - node -v
-#     - ls
-#     - ll
-#     - cf --version
-
-image: docker:stable
-services:
-    - docker:dind
-stages:
-  - RUN_TESTS
-
-build-docker:
-#  image: gcr.io/kaniko-project/executor:debug-v0.11.0
-  stage: RUN_TESTS
-  tags: 
-    - gitlab-runner
-  script:
-    - echo "Running the tests..."
-    - ls
-    - docker ps
-    - docker pull node:14
+include: $CORE_TEMPLATE
+variables:
+  PROJECT: "docs"
+  SPACE: "devops"
+deploy:
+  extends: .cf_deploy
   only:
-    refs:
-      - branches
-    changes:
-      - ./.docker/cf-cli/Dockerfile
+    - master
+  environment:
+      name: development
+      url: https://$PROJECT.$DEV_BASE_DOMAIN
 
- #   - /kaniko/executor
- #        --context $CI_PROJECT_DIR/
- #        --dockerfile $CI_PROJECT_DIR/Dockerfile
- #        --no-push
+
+
+
