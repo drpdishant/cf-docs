@@ -18,6 +18,14 @@ Make Sure that if there is any parent repository or main repository available al
 
 **Now you can see CI/CD Tab on side-navigation bar**
 
+### How to add CI/CD variables in your pipeline
+
+Go to **Setting > CI/CD Settings > Expand Variables > Add Variable**
+
+<img src=add-variable.PNG width="50%" height="50%"/>
+
+**Note** - For add SSH KEY . just change variable Type to File
+
 ## Make .gitlab-ci.yml file in your repository
 
 ### For API
@@ -30,13 +38,10 @@ We will learn each stage one by one :
 
 Use this stage/job if you .env file is coming from s3 bucket
 
-For this stage first you have to setup ci/cd variables
+For this stage, first you have to setup ci/cd variables for Access Key and Secret Key 
 
-#### How to add CI/CD variables in your pipeline
 
-Go to **Setting > CI/CD Settings > Expand Variables > Add Variable**
 
-<img src=add-variable.PNG width="50%" height="50%"/>
 
 
 
