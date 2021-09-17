@@ -9,7 +9,7 @@ Go to **Settings > Expand Visibility, project features, permissions > Enable CI/
 <img src=enable-ci.PNG width="50%" height="50%"/>
 
 
-**Note- **CI/CD Runner only work with **Internal/Public** projects\
+**Note- ** CI/CD Runner only work with **Internal/Public** projects
 
 ### Make Project Internal/Public
 
