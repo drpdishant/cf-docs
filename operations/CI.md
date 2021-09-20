@@ -64,6 +64,14 @@ Use this stage/job if you .env file is coming from s3 bucket
 
 For this stage, first you have to setup ci/cd variables for Access Key and Secret Key which is shown above
 
+**Variables to be store in CI/CD variables :**
+
+ACCESS_KEY_$CI_COMMIT_REF_NAME
+SECRET_KEY_$CI_COMMIT_REF_NAME
+
+Here CI_COMMIT_REF_NAME is branch name like if you want to add ACCESS_KEY for development brannch use **ACCESS_KEY_development="Afnmdfn"** in your CI/CD variables
+
+
 **Example :**
 
 ```
@@ -97,6 +105,10 @@ BUILD_ARGS: "--build-arg APP_NAME=${PROJECT} --build-arg PROFILE=${CI_COMMIT_REF
 ```
 
 **DOCKERFILE_PATH** - Use for declare dockerfile full path (Default value is **./Dockerfile**)
+
+**ENV_FILE** - .env full path (Default value is **./.env.$CI_COMMIT_REF_NAME**)
+
+**IMAGE_TAG** - image tag (Default value is **$CI_COMMIT_REF_NAME**)
 
 Add following for build stage:
 
