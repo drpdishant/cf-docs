@@ -33,10 +33,10 @@ Go to **Setting > CI/CD Settings > Expand Variables > Add Variable**
 
 This is required for all pipeline
 
-`
+```
 include:
   remote: 'https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/build.yaml'
-`
+```
 
 It is basically add hidden jobs in your CI/CD . You can call any job by using **extends** keyword
 
@@ -54,14 +54,14 @@ For this stage, first you have to setup ci/cd variables for Access Key and Secre
 
 **Example :**
 
-`
+```
 get_env:
   stage: get_env
   extends: .get_env
   variables:
     BUCKET_NAME: "__development_bucket__"
     PRODUCTION_BUCKET_NAME: "__production_bucket__"
-`
+```
 As you can see , you have to add your .env full path ex. **BUCKET_NAME: "openxcell-development-private/__project__/.env"** . Now,you will use this .env for next stage. Enjoy ....
 
 
