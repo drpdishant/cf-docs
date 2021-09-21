@@ -238,9 +238,12 @@ deploy_prod:
   only:
     - production
 ```
-#Now you are ready to rock!!!!!
+
+## Now you are ready to rock!!!!!
 
 You can see running pipeline and its logs in **CI/CD > Pipelines or Jobs**
+
+![Pipeline](./pipeline.png ':size=70%')
 
 
 
