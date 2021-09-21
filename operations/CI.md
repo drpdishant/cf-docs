@@ -139,9 +139,9 @@ In this stage we will deploy our api/backend to our api server.
 
 **IP_ADDRESS** - ip of server . Default value is **api.openxcell.dev**
 
-**DOCKER_COMPOSE_TEMPLATE** - template which you want to use
-[Development docker-compose](https://gitlab.orderhive.plus/-/snippets/15/raw) // use this for development server 
-[Production/Master docker-compose](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/docker/docker-compose.yaml)  //for production server"
+**DOCKER_COMPOSE_TEMPLATE** - template which you want to use <br>
+[Development docker-compose](https://gitlab.orderhive.plus/-/snippets/15/raw) // use this for development server <br>
+[Production/Master docker-compose](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/docker/docker-compose.yaml)  //for production server
 
 **SSH_KEY_NAME** - ssh key name which you have stored in CI/CD variable. Default value is  **SSH_PRIVATE_KEY_DEV** which is for development server
 
@@ -171,15 +171,76 @@ deploy_prod:
   only:
     - master
 ```
-Here you can see **environment**. It is basically used for **Deployments > Environments**. In this you have to give name and url of your production environment . For development environment , it is already set as default. 
+Here you can see **environment**. It is basically used for **Deployments > Environments** in gitlab. In this you have to give name and url of your production environment . For development environment , it is already set as default. 
 
 Here we are using **only** keyword to specify branch . Like if you want to run specific job for specific branch only you can use this like above.
 
 
+### For Front-End(ReactJS)
+
+Use [Gitlab CI API Template](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/.gitlab-ci-static.yml) for your reference
+
+First add following into CI/CD file :
+
+```
+include:
+  remote: 'https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/build.yaml'
+stages:
+  - build
+  - deploy
+variables:
+  NGINX_PATH: "/home/ubuntu/docker-stack/nginx_conf/react" #required in development branch 
+  PROJECT: "__project-name__"
+```
+Now, We will learn each stage one by one :
+
+#### build 
+
+This stage will build your reactjs project and store it into artifacts. For more about artifacts follow this link [Gitlab Artifacts](https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html)
+
+**Variables used**
+
+**ENV_FILE** - .env full path (Default value is **./.env.$CI_COMMIT_REF_NAME**)
+
+**Example:**
+```
+build: 
+  stage: build
+  extends: .build_static
+  variables:
+    ENV_FILE: .env-live 
+```
 
 
+#### deploy
+
+This stage will deploy your static code to development/production server
+
+**Variables used**
+
+**DEPLOY_PATH** - where you want to store your docker-compose file . Default value is **/srv/www/reactjs/$PROJECT**
+
+**IP_ADDRESS** - ip of server . Default value is **api.openxcell.dev**
+
+**SSH_KEY_NAME** - ssh key name which you have stored in CI/CD variable. Default value is  **SSH_PRIVATE_KEY_DEV** which is for development server
+
+**Example:**
+```
+deploy_prod:
+  stage: deploy
+  environment:
+    name: production
+    url: "__url__"
+  variables:
+    DEPLOY_PATH: /usr/share/nginx/html
+    IP_ADDRESS: "3.216.179.32"
+    SSH_KEY_NAME: "KEY_PROD"
+  only:
+    - production
+```
 
 
+You can see running pipeline and its logs in **CI/CD > Pipelines or Jobs**
 
 
 
