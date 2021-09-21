@@ -140,8 +140,8 @@ In this stage we will deploy our api/backend to our api server.
 **IP_ADDRESS** - ip of server . Default value is **api.openxcell.dev**
 
 **DOCKER_COMPOSE_TEMPLATE** - template which you want to use
-"https://gitlab.orderhive.plus/-/snippets/15/raw" // use this for development server 
-"https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/docker/docker-compose.yaml //for production server"
+[Development docker-compose](https://gitlab.orderhive.plus/-/snippets/15/raw) // use this for development server 
+[Production/Master docker-compose](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/docker/docker-compose.yaml)  //for production server"
 
 **SSH_KEY_NAME** - ssh key name which you have stored in CI/CD variable. Default value is  **SSH_PRIVATE_KEY_DEV** which is for development server
 
