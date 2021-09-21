@@ -43,7 +43,7 @@ It is basically add hidden jobs in your CI/CD . You can call any job by using **
 
 ### For API
 
-Use [Gitlab CI Templates](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/blob/master/templates) for your reference
+Use [Gitlab CI API Template](https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/.gitlab-ci-api.yml) for your reference
 
 First add following into CI/CD file :
 ```
@@ -119,6 +119,63 @@ build:
   variables:
     BUILD_ARGS: "--build-arg APP_NAME=${PROJECT} --build-arg NODE_ENV=${CI_COMMIT_REF_NAME}"
 ```
+
+build stage is mainly common for both development, master branch. We will learn , how to run specific job for specific branch in deploy stage.
+
+
+#### deploy
+
+In this stage we will deploy our api/backend to our api server.
+
+**Note** - For production , store SSH key into group variable or project variable **as file**
+
+![Add SSH Key](./add-ssh-key.png ':size=70%')
+
+**Variables used**
+
+**CONT_PORT(Required)** - port of your api.
+
+**DEPLOY_PATH** - where you want to store your docker-compose file . Default value is **/srv/www/$TECHNOLOGY/$PROJECT**
+
+**IP_ADDRESS** - ip of server . Default value is **api.openxcell.dev**
+
+**DOCKER_COMPOSE_TEMPLATE** - template which you want to use
+"https://gitlab.orderhive.plus/-/snippets/15/raw" // use this for development server 
+"https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/docker/docker-compose.yaml //for production server"
+
+**SSH_KEY_NAME** - ssh key name which you have stored in CI/CD variable. Default value is  **SSH_PRIVATE_KEY_DEV** which is for development server
+
+**IMAGE_TAG** - image tag which you have given in build stage. Default value is **$CI_COMMIT_REF_NAME** (Branch Name)
+
+**Example:**
+```
+deploy_dev:
+  stage: deploy
+  extends: .deploy
+  variables:
+    CONT_PORT: "7272"
+  only:
+    - development
+
+deploy_prod:
+  stage: deploy
+  extends: .deploy
+  environment:
+    name: $CI_COMMIT_REF_NAME
+    url: "__url__" #URL of production server
+  variables:
+    CONT_PORT: "7272"
+    DEPLOY_PATH: $PROJECT
+    IP_ADDRESS: "__prod_ip__"
+    SSH_KEY_NAME: "__prod_key_name__" # Add key name not its value
+  only:
+    - master
+```
+Here you can see **environment**. It is basically used for **Deployments > Environments**. In this you have to give name and url of your production environment . For development environment , it is already set as default. 
+
+Here we are using **only** keyword to specify branch . Like if you want to run specific job for specific branch only you can use this like above.
+
+
 
 
 
