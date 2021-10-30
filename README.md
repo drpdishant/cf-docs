@@ -29,7 +29,7 @@ At Openxcell we strive to embrace a Devops culture and mindset, and this is one 
 
 ### **Windows**
 
-[Download Installer](https://packages.cloudfoundry.org/stable?release=windows64&version=v7&source=github)
+[Download Installer](https://packages.cloudfoundry.org/stable?release=windows64&version=v8&source=github)
 
 ### **Linux**
 
@@ -49,10 +49,10 @@ curl -sSLk https://docs.apps.openxcell.dev/scripts/install-rhel.sh | sudo bash
 Using HomeBrew
 
 ```bash
-brew install cloudfoundry/tap/cf-cli@7
+brew install cloudfoundry/tap/cf-cli@8
 ```
 
-or [Download Installer](https://packages.cloudfoundry.org/stable?release=macosx64&version=v7&source=github)
+or [Download Installer](https://packages.cloudfoundry.org/stable?release=macosx64&version=v8&source=github)
 
 <!-- tabs:end -->
 
