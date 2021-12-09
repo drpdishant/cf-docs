@@ -744,14 +744,17 @@ section.cover blockquote>p>a:hover {
     color: var(--accent)
 }
 
-.sidebar,
+.sidebar{
+    background-color: var(--sidebarBackground);
+    transition: background-image .15s ease-in-out .15s
+}
 body {
     background-color: var(--background);
     transition: background-image .15s ease-in-out .15s
 }
 
 .sidebar {
-    color: var(--textColor)
+    color: var(--sidebarText)
 }
 
 .sidebar li {
