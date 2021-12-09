@@ -4,26 +4,8 @@ variables:
   SPACE: "devops"
 deploy:
   extends: .cf_deploy
-  variables:
-
   only:
     - master
   environment:
       name: development
       url: https://$PROJECT.$DEV_BASE_DOMAIN
-test_dev:
-  environment:
-    name: development
-  script:
-    - echo "this variables belong to $CI_ENVIRONMENT_NAME environment"
-    - echo $ENV_1
-    - echo $ENV_2
-    - echo $ENV_3
-test_prod:
-  environment:
-    name: production
-  script:
-    - echo "this variables belong to $CI_ENVIRONMENT_NAME environment"
-    - echo $ENV_1
-    - echo $ENV_2
-    - echo $ENV_3
