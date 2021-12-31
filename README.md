@@ -1,14 +1,4 @@
-# Welcome to Documentation for Openxcell Cloud
-
-## Endpoints
-
-**Cloud API:**  [api.cloud.openxcell.dev](https://api.cloud.openxcell.dev)
-
-**Cloud Apps:** [apps.openxcell.dev](https://*.apps.openxcell.dev)
-
-**Cloud Console:** [console.openxcell.dev](https://console.openxcell.dev)
-
-## Overview
+# Overview
 
 > Making deployments fun and easy for the developers
 
@@ -21,7 +11,77 @@ Integrated with technologies like [open service broker api](https://www.openserv
 - No Dockerfiles
 - No 100's of lines of pipelines
 
-### Embracing Devops
+**Example:**
+
+- Deployment Pipeline Snippet without Cloudfoundry.
+
+```yaml
+.build: # Builds and Pushes the Container Image
+  variables:
+    BUILD_ARGS: ""
+    DOCKERFILE_PATH: "Dockerfile"
+    ENV_FILE: .env.$CI_COMMIT_REF_NAME
+    IMAGE_TAG: $CI_COMMIT_REF_NAME
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - cp $ENV_FILE .env || ls
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n ${CI_REGISTRY_USER}:${CI_REGISTRY_PASSWORD} | base64)\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/$DOCKERFILE_PATH $BUILD_ARGS --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
+  only:
+    - development
+    - master
+    - production
+.deploy: # Deploys to Target Server
+  environment:
+    name: $CI_COMMIT_REF_NAME
+    url: https://$PROJECT.api.openxcell.dev
+  variables:
+    CONT_PORT: ""
+    DEPLOY_PATH: /srv/www/$TECHNOLOGY/$PROJECT
+    USER: "ubuntu"
+    IP_ADDRESS: "api.openxcell.dev"
+    DOCKER_COMPOSE_TEMPLATE: "https://${CI_SERVER_HOST}/-/snippets/15/raw"
+    IMAGE_TAG: $CI_COMMIT_REF_NAME
+  image: 
+    name: openxcelltechnolab/ssh:alpine
+  script:
+    - mkdir ~/.ssh
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa
+    - ssh -o StrictHostKeyChecking=no ${USER}@${IP_ADDRESS} docker system prune -f
+    - ssh -o StrictHostKeyChecking=no ${USER}@${IP_ADDRESS} docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+    - ssh -o StrictHostKeyChecking=no ${USER}@${IP_ADDRESS} mkdir -p ${DEPLOY_PATH}
+    - ssh -o StrictHostKeyChecking=no ${USER}@${IP_ADDRESS} "curl -sSLk $DOCKER_COMPOSE_TEMPLATE | sed 's%__PROJECT_NAME__%${PROJECT}%g;s%__PORT__%${CONT_PORT}%g;s%__IMAGE_URI__%${CI_REGISTRY_IMAGE}%g;s%__IMAGE_TAG__%${IMAGE_TAG}%g' > ${DEPLOY_PATH}/docker-compose.yml"
+    - ssh -o StrictHostKeyChecking=no ${USER}@${IP_ADDRESS} "cd ${DEPLOY_PATH}; docker-compose pull"
+    - ssh -o StrictHostKeyChecking=no ${USER}@${IP_ADDRESS} "cd ${DEPLOY_PATH}; docker-compose up -d --force-recreate"
+  only:
+    - development
+    - master
+    - production
+```
+
+- Deployment Pipeline Snippet with Cloudfoundry
+
+```yaml
+# Cf Push Uploads the Source to Cloudfoundry API. Build it using Paketo Buildpacks, and Deploys using Eirini Controller on Kubernetes.
+.cf_deploy:
+    image:
+        name: $CF_IMAGE # Global Variable providing CF CLI image registry.${CI_SERVER_HOST}/public-resources/gitlab-ci:cf-cli
+        entrypoint: [""]
+    only:
+    - development
+    environment:
+      name: development
+      url: https://$PROJECT-$SERVICE.$DEV_BASE_DOMAIN # DEV_BASE_DOMAIN is set as global variable with value apps.openxcell.dev
+      # on_stop: stop_cf
+    script:
+        - cf login -a $CF_API -u $DEPLOY_USER -p $DEPLOY_TOKEN -o $ORG -s $SPACE
+        - cf push > /dev/null
+```
+
+## Embracing Devops
 
 At Openxcell we strive to embrace a Devops culture and mindset, and this is one such attempt to bring a cultural shift to the organization, by creating consistent and streamlined processes across teams, shifting responsibility and accountability of the application development to their respective teams.
 

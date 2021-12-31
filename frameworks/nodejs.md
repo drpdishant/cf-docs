@@ -3,6 +3,7 @@
 This guide walks you through deploying your NodeJS application to Openxcell Cloud.
 
 Following are the configuration files you need to create.
+
 - **manifest.yml** : Cloudfoundry manifest
 - **.cfignore** : list of paths and files to ignore during cf push
 
@@ -21,6 +22,7 @@ applications:
     NODE_ENV: development #Node Env
     BP_NODE_VERSION: "12.x" #To Define Node Version Explicitly
 ```
+
 Deployment uses paketo buildpacks which will detect the builder, build the application and deploy.
 
 For more buildpack specific cofiguration refer documentation for [paketo java buildpack](https://paketo.io/docs/buildpacks/language-family-buildpacks/nodejs/)
@@ -29,6 +31,19 @@ For more buildpack specific cofiguration refer documentation for [paketo java bu
 
 ```txt
 node_modules
+```
+
+## HealthCheck
+
+To setup health check endpoints for express server, you can use [Express Actuator](https://www.npmjs.com/package/express-actuator) Package.
+
+**Example:**
+
+```bash
+const actuator = require('express-actuator');
+const app = express();
+
+app.use(actuator());
 ```
 
 ## Deploying
