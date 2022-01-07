@@ -1,4 +1,4 @@
-include: "./templates/build.yaml"
+include: "https://${CI_SERVER_HOST}/public-resources/gitlab-ci/-/raw/master/templates/build.yaml"
 variables:
   PROJECT: "docs"
   SPACE: "devops"
