@@ -35,7 +35,7 @@ This is required for all pipeline
 
 ```
 include:
-  remote: 'https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/build.yaml'
+  remote: 'https://${CI_SERVER_HOST}/public-resources/gitlab-ci/-/raw/master/templates/build.yaml'
 
 ```
 
