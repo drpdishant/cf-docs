@@ -1,4 +1,4 @@
-include: "https://gitlab.orderhive.plus/public-resources/gitlab-ci/-/raw/master/templates/build.yaml"
+include: "./templates/build.yaml"
 variables:
   PROJECT: "docs"
   SPACE: "devops"
